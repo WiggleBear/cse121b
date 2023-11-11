@@ -4,17 +4,11 @@
 
 /* Step 2 - Variables */
 
-//Declare and instantiate a variable to hold your name
 let fullName = "Linda Clark";
 
-//Declare and instantiate a variable to hold the current year.
 let currentYear = new Date(year);
 
-//Declare and instantiate a variable to hold the file path (location) 
-//and file name of the image that you placed in the images folder as a string.
-
-let profilePicture = new Image()
-profilePicture = "images/photo.png";
+let profilePicture = `images/photo.png`;
 
 /*Step 3 - Element Variables */
 
@@ -39,15 +33,20 @@ imageElement.setAttribute("alt", `Profile image of ${fullName}`);
 
 /* Step 5 - Array */
 
-let favouriteFood = ["Soup and Garri", "Beans", "Rice and Stew", "Jollof Rice", "Catfish Peppersoup"];
-foodElement.innerHTML = favouriteFood;
+let favFood = ["Chicken Tenders", "Fried Rice", "Banana Cake"];
 
-let favouriteFood2 = "Goat-Meat Peppersoup";
-favouriteFood.push(favouriteFood2);
-foodElement.innerHTML += `<br> ${favouriteFood}`;
-favouriteFood.shift();
-foodElement.innerHTML += `<br> ${favouriteFood}`;
-favouriteFood.pop();
-foodElement.innerHTML += `<br> ${favouriteFood}`;
+foodElement.textContent = favFood;
 
+let favFood2 = ["Grilled Tuna Sandwich"];
 
+favFood.push(favFood2);
+
+foodElement.innerHTML += `<br>${favFood}`;
+
+favFood.shift();
+
+foodElement.innerHTML += `<br>${favFood}`;
+
+favFood.pop();
+
+foodElement.innerHTML += `<br>${favFood}`;
