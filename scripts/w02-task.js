@@ -5,48 +5,31 @@
 /* Step 2 - Variables */
 
 let fullName = "Linda Clark";
-
-let currentYear = new Date(year);
-
-let profilePicture = `images/photo.png`;
+const currentYear = new Date().getFullYear();
+const profilePicture = "images/photo.png";
 
 /*Step 3 - Element Variables */
-
 const nameElement = document.getElementById('name');
-
-const foodElement = document.getElementById('food');
-
-const yearElement = document.querySelector('year');
-
+const yearElement = document.querySelector('#year');
 const imageElement = document.querySelector('img');
+const foodElement = document.getElementById('food');
 
 /* Step 4 - Adding Content */
 
 nameElement.innerHTML = `<strong>${fullName}</strong>`;
-
-yearElement.textContent = currentYear;
-
+yearElement.textContent = currentYear.toString();
 imageElement.setAttribute("src", profilePicture);
-
 imageElement.setAttribute("alt", `Profile image of ${fullName}`);
 
 
 /* Step 5 - Array */
 
-let favFood = ["Chicken Tenders", "Fried Rice", "Banana Cake"];
-
-foodElement.textContent = favFood;
-
-let favFood2 = ["Grilled Tuna Sandwich"];
-
-favFood.push(favFood2);
-
-foodElement.innerHTML += `<br>${favFood}`;
-
-favFood.shift();
-
-foodElement.innerHTML += `<br>${favFood}`;
-
-favFood.pop();
-
-foodElement.innerHTML += `<br>${favFood}`;
+const favFoods = ["Asian Food"," Seafood"," Steak"," Lamb"," Stinky Tofu"];
+foodElement.innerHTML += favFoods;
+const newFavFoods = " Sushi";
+favFoods.push(newFavFoods);
+foodElement.innerHTML += `<br>${favFoods}`;
+favFoods.shift(favFoods);
+foodElement.innerHTML += `<br>${favFoods}`;
+favFoods.pop(favFoods);
+foodElement.innerHTML += `<br>${favFoods}`;
