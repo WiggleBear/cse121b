@@ -1,52 +1,41 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const ratingSelect = document.getElementById("rating");
-    const generateButton = document.getElementById("generateSuggestion");
-    const movieInfoElement = document.getElementById("movieInfo");
-  
-    generateButton.addEventListener("click", () => {
-      const selectedRating = ratingSelect.value;
-      fetchMovieSuggestion(selectedRating);
-    });
-  
-    async function fetchMovieSuggestion(rating) {
-      const url = `https://movie-database-alternative.p.rapidapi.com/?r=json&rating=${rating}`;
-      const options = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Key': '405fa001dfmshc6401711dadfde0p131270jsn9a47bbbfb785',
-          'X-RapidAPI-Host': 'movie-database-alternative.p.rapidapi.com'
-        }
-      };
-  
-      try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-  
-        if (result.length > 0) {
-          const randomMovie = getRandomMovie(result);
-          displayMovieInfo(randomMovie);
-        } else {
-          movieInfoElement.innerHTML = `<p>No movies found for the selected rating.</p>`;
-        }
-      } catch (error) {
-        console.error(error);
-      }
+const genderFilter = document.getElementById("genderFilter");
+const hp_result = document.getElementById("hp_result");
+const hp_name = document.getElementById("hp_name");
+const hp_house = document.querySelector(".house");
+const hp_button = document.getElementById("hp_button");
+
+hp_button.addEventListener("click", getRandomCharacter);
+
+function getRandomCharacter() {
+    let apiUrl = "https://hp-api.onrender.com/api/characters";
+
+    const selectedGender = genderFilter.value;
+    if (selectedGender && selectedGender !== "no_filter") {
+        apiUrl += `?gender=${selectedGender}`;
     }
-  
-    function getRandomMovie(movies) {
-      const randomIndex = Math.floor(Math.random() * movies.length);
-      return movies[randomIndex];
-    }
-  
-    function displayMovieInfo(movie) {
-      const html = `<h2>${movie.title}</h2>
-                    <p>Genre: ${movie.genre}</p>
-                    <p>Plot: ${movie.plot}</p>
-                    <p>Country: ${movie.country}</p>
-                    <p>Language: ${movie.language}</p>
-                    <img src="${movie.poster}" alt="${movie.title} Poster">`;
-      
-      movieInfoElement.innerHTML = html;
-    }
-  });
-  
+
+    fetch(apiUrl)
+        .then((res) => res.json())
+        .then((data) => {
+            const filteredData = selectedGender && selectedGender !== "no_filter"
+                ? data.filter(character => character.gender === selectedGender && character.image)
+                : data.filter(character => character.image);
+
+            if (filteredData.length === 0) {
+                hp_name.textContent = "No matching characters found";
+                hp_result.innerHTML = "";
+                hp_house.innerHTML = "";
+                return;
+            }
+
+            const randIndex = Math.floor(Math.random() * filteredData.length);
+            const { name: hpName, image: hpImg, house: hpHouse } = filteredData[randIndex];
+
+            hp_name.textContent = hpName;
+            hp_result.innerHTML = `<img src="${hpImg}" alt="${hpName}" />`;
+            hp_house.innerHTML = hpHouse;
+        })
+        .catch((error) => {
+            console.error("Error fetching data:", error);
+        });
+}
